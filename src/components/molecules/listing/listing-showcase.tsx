@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import Title from "@/components/atomics/title";
 import {
@@ -21,7 +21,7 @@ interface ListingShowcaseProps {
 
 function ListingShowcase({ id, title, subtitle }: ListingShowcaseProps) {
   const { data: listings } = useGetAllListingQuery({});
-  console.log("🚀 ~ ListingShowcase ~ listings:", listings)
+
   return (
     <section id={id} className="px-10 xl:container xl:mx-auto pt-16 pb-[100px]">
       <div className="flex justify-center text-center">
@@ -32,7 +32,7 @@ function ListingShowcase({ id, title, subtitle }: ListingShowcaseProps) {
           {listings?.data?.data.map((item: Listing, index: number) => (
             <CarouselItem key={index} className="basis-1/4">
               <CardDeals
-                image={item.attachments?.[0] || ''}
+                image={item.attachments?.[0] || ""}
                 title={item.title}
                 slug={"/listing/" + item.slug}
                 price={item.price_per_day}

@@ -38,20 +38,21 @@ function SignIn() {
       password: "",
     },
   });
-
-  const [login, { isLoading }] = useLoginMutation()
+  const [login, { isLoading }] = useLoginMutation();
 
   async function onSubmit(values: FormData) {
     try {
       const res = await login(values).unwrap();
-      if(res.success) {
-        const user = res.data
-        const loginRes = await signIn('credentials', {
+
+      if (res.success) {
+        const user = res.data;
+
+        const loginRes = await signIn("credentials", {
           id: user.id,
           email: user.email,
           name: user.name,
           token: user.token,
-          callbackUrl: searchParams.get('callbackUrl') || "/",
+          callbackUrl: searchParams.get("callbackUrl") || "/",
           redirect: false,
         });
         toast({
@@ -59,6 +60,7 @@ function SignIn() {
           description: "Sign in successfully",
           open: true,
         });
+
         router.push(loginRes?.url || "/");
       }
 
@@ -143,7 +145,9 @@ function SignIn() {
                 Remember me
               </label>
             </div>
-            <Button type="submit" disabled={isLoading}>Sign In</Button>
+            <Button type="submit" disabled={isLoading}>
+              Sign In
+            </Button>
             <Link href="/sign-up">
               <Button variant="third" type="button" className="mt-3">
                 Create New Account

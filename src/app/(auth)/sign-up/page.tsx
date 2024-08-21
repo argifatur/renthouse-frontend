@@ -15,7 +15,7 @@ import {
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useToast } from "@/components/atomics/use-toast";
 import { useRegisterMutation } from "@/services/auth.service";
 import { signIn } from "next-auth/react";
@@ -41,7 +41,7 @@ function SignUp() {
       password: "",
     },
   });
-  const [register, { isLoading }] = useRegisterMutation()
+  const [register, { isLoading }] = useRegisterMutation();
 
   async function onSubmit(values: FormData) {
     try {
@@ -50,23 +50,24 @@ function SignUp() {
         password_confirmation: values.password,
       }).unwrap();
 
-      if(res.success) {
+      if (res.success) {
         const user = res.data;
         await signIn("credentials", {
-            id: user.id,
-            email: user.email,
-            password: values.password,
-            name: user.name,
-            token: user.token,
-            redirect: false
-          });
-          toast({
-            title: "Welcome",
-            description: "Sign up successfully",
-            open: true,
-          });
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          token: user.token,
+          redirect: false,
+        });
+
+        toast({
+          title: "Welcome",
+          description: "Sign up successfully",
+          open: true,
+        });
+
+        router.push("/");
       }
-      router.push("/");
     } catch (error: any) {
       toast({
         title: "Something went wrong",
@@ -190,7 +191,9 @@ function SignUp() {
               </label>
             </div>
 
-            <Button type="submit" disabled={isLoading}>Sign Up</Button>
+            <Button type="submit" disabled={isLoading}>
+              Sign Up
+            </Button>
             <Link href="/sign-in">
               <Button variant="third" className="mt-3">
                 Sign In to My Account
